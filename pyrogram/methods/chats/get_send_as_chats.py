@@ -16,47 +16,48 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Union
+from typing import List, Union
 
 from pyrogram import raw
+from pyrogram import types
 from pyrogram.scaffold import Scaffold
 
 
-class UnbanChatMember(Scaffold):
-    async def unban_chat_member(
+class GetSendAsChats(Scaffold):
+    async def get_send_as_chats(
         self,
-        chat_id: Union[int, str],
-        user_id: Union[int, str]
-    ) -> bool:
-        """Unban a previously banned user in a supergroup or channel.
-        The user will **not** return to the group or channel automatically, but will be able to join via link, etc.
-        You must be an administrator for this to work.
+        chat_id: Union[int, str]
+    ) -> List["types.Chat"]:
+        """Get the list of "send_as" chats available.
 
         Parameters:
             chat_id (``int`` | ``str``):
                 Unique identifier (int) or username (str) of the target chat.
 
-            user_id (``int`` | ``str``):
-                Unique identifier (int) or username (str) of the target user.
-                For a contact that exists in your Telegram address book you can use his phone number (str).
-
         Returns:
-            ``bool``: True on success.
+            List[:obj:`~pyrogram.types.Chat`]: The list of chats.
 
         Example:
             .. code-block:: python
 
-                # Unban chat member right now
-                app.unban_chat_member(chat_id, user_id)
+                chats = app.get_send_as_chats(chat_id)
+                print(chats)
         """
-        await self.send(
-            raw.functions.channels.EditBanned(
-                channel=await self.resolve_peer(chat_id),
-                participant=await self.resolve_peer(user_id),
-                banned_rights=raw.types.ChatBannedRights(
-                    until_date=0
-                )
+        r = await self.send(
+            raw.functions.channels.GetSendAs(
+                peer=await self.resolve_peer(chat_id)
             )
         )
 
-        return True
+        users = {u.id: u for u in r.users}
+        chats = {c.id: c for c in r.chats}
+
+        send_as_chats = types.List()
+
+        for p in r.peers:
+            if isinstance(p, raw.types.PeerUser):
+                send_as_chats.append(types.Chat._parse_chat(self, users[p.user_id]))
+            else:
+                send_as_chats.append(types.Chat._parse_chat(self, chats[p.channel_id]))
+
+        return send_as_chats

@@ -22,40 +22,33 @@ from pyrogram import raw
 from pyrogram.scaffold import Scaffold
 
 
-class UnbanChatMember(Scaffold):
-    async def unban_chat_member(
+class ApproveChatJoinRequest(Scaffold):
+    async def approve_chat_join_request(
         self,
         chat_id: Union[int, str],
-        user_id: Union[int, str]
+        user_id: int,
     ) -> bool:
-        """Unban a previously banned user in a supergroup or channel.
-        The user will **not** return to the group or channel automatically, but will be able to join via link, etc.
-        You must be an administrator for this to work.
+        """Approve a chat join request.
+
+        The bot must be an administrator in the chat for this to work and must have the *can_invite_users* administrator
+        right.
 
         Parameters:
             chat_id (``int`` | ``str``):
-                Unique identifier (int) or username (str) of the target chat.
+                Unique identifier for the target chat or username of the target channel/supergroup
+                (in the format @username).
 
-            user_id (``int`` | ``str``):
-                Unique identifier (int) or username (str) of the target user.
-                For a contact that exists in your Telegram address book you can use his phone number (str).
+            user_id (``int``):
+                Unique identifier of the target user.
 
         Returns:
             ``bool``: True on success.
-
-        Example:
-            .. code-block:: python
-
-                # Unban chat member right now
-                app.unban_chat_member(chat_id, user_id)
         """
         await self.send(
-            raw.functions.channels.EditBanned(
-                channel=await self.resolve_peer(chat_id),
-                participant=await self.resolve_peer(user_id),
-                banned_rights=raw.types.ChatBannedRights(
-                    until_date=0
-                )
+            raw.functions.messages.HideChatJoinRequest(
+                peer=await self.resolve_peer(chat_id),
+                user_id=await self.resolve_peer(user_id),
+                approved=True
             )
         )
 

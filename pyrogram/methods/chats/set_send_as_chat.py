@@ -22,41 +22,34 @@ from pyrogram import raw
 from pyrogram.scaffold import Scaffold
 
 
-class UnbanChatMember(Scaffold):
-    async def unban_chat_member(
+class SetSendAsChat(Scaffold):
+    async def set_send_as_chat(
         self,
         chat_id: Union[int, str],
-        user_id: Union[int, str]
+        send_as_chat_id: Union[int, str]
     ) -> bool:
-        """Unban a previously banned user in a supergroup or channel.
-        The user will **not** return to the group or channel automatically, but will be able to join via link, etc.
-        You must be an administrator for this to work.
+        """Set the default "send_as" chat for a chat.
+
+        Use :meth:`~pyrogram.Client.get_send_as_chats` to get all the "send_as" chats available for use.
 
         Parameters:
             chat_id (``int`` | ``str``):
                 Unique identifier (int) or username (str) of the target chat.
 
-            user_id (``int`` | ``str``):
-                Unique identifier (int) or username (str) of the target user.
-                For a contact that exists in your Telegram address book you can use his phone number (str).
+            send_as_chat_id (``int`` | ``str``):
+                Unique identifier (int) or username (str) of the send_as chat.
 
         Returns:
-            ``bool``: True on success.
+            ``bool``: On success, true is returned
 
         Example:
             .. code-block:: python
 
-                # Unban chat member right now
-                app.unban_chat_member(chat_id, user_id)
+                app.set_send_as_chat(chat_id, send_as_chat_id)
         """
-        await self.send(
-            raw.functions.channels.EditBanned(
-                channel=await self.resolve_peer(chat_id),
-                participant=await self.resolve_peer(user_id),
-                banned_rights=raw.types.ChatBannedRights(
-                    until_date=0
-                )
+        return await self.send(
+            raw.functions.messages.SaveDefaultSendAs(
+                peer=await self.resolve_peer(chat_id),
+                send_as=await self.resolve_peer(send_as_chat_id)
             )
         )
-
-        return True

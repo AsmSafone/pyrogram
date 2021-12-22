@@ -19,44 +19,44 @@
 from typing import Union
 
 from pyrogram import raw
+from pyrogram import types
 from pyrogram.scaffold import Scaffold
 
 
-class UnbanChatMember(Scaffold):
-    async def unban_chat_member(
+class GetDiscussionMessage(Scaffold):
+    async def get_discussion_message(
         self,
         chat_id: Union[int, str],
-        user_id: Union[int, str]
-    ) -> bool:
-        """Unban a previously banned user in a supergroup or channel.
-        The user will **not** return to the group or channel automatically, but will be able to join via link, etc.
-        You must be an administrator for this to work.
+        message_id: int,
+    ) -> "types.Message":
+        """Get the discussion message from the linked discussion group of a channel post.
+
+        Reply to the returned message to leave a comment on the linked channel post.
 
         Parameters:
             chat_id (``int`` | ``str``):
                 Unique identifier (int) or username (str) of the target chat.
 
-            user_id (``int`` | ``str``):
-                Unique identifier (int) or username (str) of the target user.
-                For a contact that exists in your Telegram address book you can use his phone number (str).
-
-        Returns:
-            ``bool``: True on success.
+            message_id (``int``):
+                Message id.
 
         Example:
             .. code-block:: python
 
-                # Unban chat member right now
-                app.unban_chat_member(chat_id, user_id)
+                # Get the discussion message
+                m = app.get_discussion_message(channel_id, message_id)
+
+                # Comment to the post by replying
+                m.reply("comment")
         """
-        await self.send(
-            raw.functions.channels.EditBanned(
-                channel=await self.resolve_peer(chat_id),
-                participant=await self.resolve_peer(user_id),
-                banned_rights=raw.types.ChatBannedRights(
-                    until_date=0
-                )
+        r = await self.send(
+            raw.functions.messages.GetDiscussionMessage(
+                peer=await self.resolve_peer(chat_id),
+                msg_id=message_id
             )
         )
 
-        return True
+        users = {u.id: u for u in r.users}
+        chats = {c.id: c for c in r.chats}
+
+        return await types.Message._parse(self, r.messages[0], users, chats)
