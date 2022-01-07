@@ -1,5 +1,5 @@
 #  Pyrogram - Telegram MTProto API Client Library for Python
-#  Copyright (C) 2017-2021 Dan <https://github.com/delivrance>
+#  Copyright (C) 2017-present Dan <https://github.com/delivrance>
 #
 #  This file is part of Pyrogram.
 #
@@ -197,7 +197,7 @@ class SendAudio(Scaffold):
                 thumb = await self.save_file(thumb)
                 file = await self.save_file(audio, progress=progress, progress_args=progress_args)
                 media = raw.types.InputMediaUploadedDocument(
-                    mime_type=self.guess_mime_type(audio.name) or "audio/mpeg",
+                    mime_type=self.guess_mime_type(file_name or audio.name) or "audio/mpeg",
                     file=file,
                     thumb=thumb,
                     attributes=[
@@ -206,7 +206,7 @@ class SendAudio(Scaffold):
                             performer=performer,
                             title=title
                         ),
-                        raw.types.DocumentAttributeFilename(file_name=audio.name)
+                        raw.types.DocumentAttributeFilename(file_name=file_name or audio.name)
                     ]
                 )
 

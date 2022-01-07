@@ -1,5 +1,5 @@
 #  Pyrogram - Telegram MTProto API Client Library for Python
-#  Copyright (C) 2017-2021 Dan <https://github.com/delivrance>
+#  Copyright (C) 2017-present Dan <https://github.com/delivrance>
 #
 #  This file is part of Pyrogram.
 #
@@ -207,7 +207,7 @@ class SendVideo(Scaffold):
                 thumb = await self.save_file(thumb)
                 file = await self.save_file(video, progress=progress, progress_args=progress_args)
                 media = raw.types.InputMediaUploadedDocument(
-                    mime_type=self.guess_mime_type(video.name) or "video/mp4",
+                    mime_type=self.guess_mime_type(file_name or video.name) or "video/mp4",
                     file=file,
                     ttl_seconds=ttl_seconds,
                     thumb=thumb,
@@ -218,7 +218,7 @@ class SendVideo(Scaffold):
                             w=width,
                             h=height
                         ),
-                        raw.types.DocumentAttributeFilename(file_name=video.name)
+                        raw.types.DocumentAttributeFilename(file_name=file_name or video.name)
                     ]
                 )
 

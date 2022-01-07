@@ -1,5 +1,5 @@
 #  Pyrogram - Telegram MTProto API Client Library for Python
-#  Copyright (C) 2017-2021 Dan <https://github.com/delivrance>
+#  Copyright (C) 2017-present Dan <https://github.com/delivrance>
 #
 #  This file is part of Pyrogram.
 #
@@ -175,6 +175,7 @@ def pyrogram_api():
             get_history_count
             read_history
             iter_history
+            iter_messages
             send_poll
             vote_poll
             stop_poll
@@ -544,6 +545,11 @@ def pyrogram_api():
         inline_query="""
         InlineQuery
             InlineQuery.answer
+        """,
+        chat_join_request="""
+        ChatJoinRequest
+            ChatJoinRequest.approve
+            ChatJoinRequest.decline
         """
     )
 

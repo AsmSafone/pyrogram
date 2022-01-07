@@ -1,5 +1,5 @@
 #  Pyrogram - Telegram MTProto API Client Library for Python
-#  Copyright (C) 2017-2021 Dan <https://github.com/delivrance>
+#  Copyright (C) 2017-present Dan <https://github.com/delivrance>
 #
 #  This file is part of Pyrogram.
 #
@@ -35,6 +35,7 @@ from .get_history_count import GetHistoryCount
 from .get_media_group import GetMediaGroup
 from .get_messages import GetMessages
 from .iter_history import IterHistory
+from .iter_messages import IterMessages
 from .read_history import ReadHistory
 from .retract_vote import RetractVote
 from .search_global import SearchGlobal
@@ -93,6 +94,7 @@ class Messages(
     RetractVote,
     DownloadMedia,
     IterHistory,
+    IterMessages,
     SendCachedMedia,
     GetHistoryCount,
     ReadHistory,

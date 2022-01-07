@@ -1,5 +1,5 @@
 #  Pyrogram - Telegram MTProto API Client Library for Python
-#  Copyright (C) 2017-2021 Dan <https://github.com/delivrance>
+#  Copyright (C) 2017-present Dan <https://github.com/delivrance>
 #
 #  This file is part of Pyrogram.
 #
@@ -79,8 +79,8 @@ class Connection:
     async def send(self, data: bytes):
         try:
             await self.protocol.send(data)
-        except Exception:
-            raise OSError
+        except Exception as e:
+            raise OSError(e)
 
     async def recv(self) -> Optional[bytes]:
         return await self.protocol.recv()

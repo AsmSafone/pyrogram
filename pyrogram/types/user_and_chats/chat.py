@@ -1,5 +1,5 @@
 #  Pyrogram - Telegram MTProto API Client Library for Python
-#  Copyright (C) 2017-2021 Dan <https://github.com/delivrance>
+#  Copyright (C) 2017-present Dan <https://github.com/delivrance>
 #
 #  This file is part of Pyrogram.
 #
@@ -247,7 +247,8 @@ class Chat(Object):
             is_fake=getattr(channel, "fake", None),
             title=channel.title,
             username=getattr(channel, "username", None),
-            photo=types.ChatPhoto._parse(client, getattr(channel, "photo", None), peer_id, channel.access_hash),
+            photo=types.ChatPhoto._parse(client, getattr(channel, "photo", None), peer_id,
+                                         getattr(channel, "access_hash", 0)),
             restrictions=types.List([types.Restriction._parse(r) for r in restriction_reason]) or None,
             permissions=types.ChatPermissions._parse(getattr(channel, "default_banned_rights", None)),
             members_count=getattr(channel, "participants_count", None),

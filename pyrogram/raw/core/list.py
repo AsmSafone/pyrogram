@@ -1,5 +1,5 @@
 #  Pyrogram - Telegram MTProto API Client Library for Python
-#  Copyright (C) 2017-2021 Dan <https://github.com/delivrance>
+#  Copyright (C) 2017-present Dan <https://github.com/delivrance>
 #
 #  This file is part of Pyrogram.
 #
@@ -23,4 +23,4 @@ from .tl_object import TLObject
 
 class List(TList[Any], TLObject):
     def __repr__(self) -> str:
-        return f"pyrogram.api.core.List([{','.join(TLObject.__repr__(i) for i in self)}])"
+        return f"pyrogram.raw.core.List([{','.join(TLObject.__repr__(i) for i in self)}])"

@@ -1,5 +1,5 @@
 #  Pyrogram - Telegram MTProto API Client Library for Python
-#  Copyright (C) 2017-2021 Dan <https://github.com/delivrance>
+#  Copyright (C) 2017-present Dan <https://github.com/delivrance>
 #
 #  This file is part of Pyrogram.
 #
@@ -218,7 +218,7 @@ text = create(text_filter)
 
 # region reply_filter
 async def reply_filter(_, __, m: Message):
-    return bool(m.reply_to_message)
+    return bool(m.reply_to_message_id)
 
 
 reply = create(reply_filter)

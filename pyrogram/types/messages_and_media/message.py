@@ -1,5 +1,5 @@
 #  Pyrogram - Telegram MTProto API Client Library for Python
-#  Copyright (C) 2017-2021 Dan <https://github.com/delivrance>
+#  Copyright (C) 2017-present Dan <https://github.com/delivrance>
 #
 #  This file is part of Pyrogram.
 #
@@ -94,6 +94,12 @@ class Message(Object, Update):
 
         forward_date (``int``, *optional*):
             For forwarded messages, date the original message was sent in Unix time.
+
+        reply_to_message_id (``int``, *optional*):
+            The id of the message which this message directly replied to.
+
+        reply_to_top_message_id (``int``, *optional*):
+            The id of the first message which started this message thread.
 
         reply_to_message (:obj:`~pyrogram.types.Message`, *optional*):
             For replies, the original message. Note that the Message object in this field will not contain
@@ -308,6 +314,8 @@ class Message(Object, Update):
         forward_from_message_id: int = None,
         forward_signature: str = None,
         forward_date: int = None,
+        reply_to_message_id: int = None,
+        reply_to_top_message_id: int = None,
         reply_to_message: "Message" = None,
         mentioned: bool = None,
         empty: bool = None,
@@ -380,6 +388,8 @@ class Message(Object, Update):
         self.forward_from_message_id = forward_from_message_id
         self.forward_signature = forward_signature
         self.forward_date = forward_date
+        self.reply_to_message_id = reply_to_message_id
+        self.reply_to_top_message_id = reply_to_top_message_id
         self.reply_to_message = reply_to_message
         self.mentioned = mentioned
         self.empty = empty
@@ -688,6 +698,14 @@ class Message(Object, Update):
                             video_attributes = attributes.get(raw.types.DocumentAttributeVideo, None)
                             animation = types.Animation._parse(client, doc, video_attributes, file_name)
                             media_type = "animation"
+                        elif raw.types.DocumentAttributeSticker in attributes:
+                            sticker = await types.Sticker._parse(
+                                client, doc,
+                                attributes.get(raw.types.DocumentAttributeImageSize, None),
+                                attributes[raw.types.DocumentAttributeSticker],
+                                file_name
+                            )
+                            media_type = "sticker"
                         elif raw.types.DocumentAttributeVideo in attributes:
                             video_attributes = attributes[raw.types.DocumentAttributeVideo]
 
@@ -697,14 +715,6 @@ class Message(Object, Update):
                             else:
                                 video = types.Video._parse(client, doc, video_attributes, file_name, media.ttl_seconds)
                                 media_type = "video"
-                        elif raw.types.DocumentAttributeSticker in attributes:
-                            sticker = await types.Sticker._parse(
-                                client, doc,
-                                attributes.get(raw.types.DocumentAttributeImageSize, None),
-                                attributes[raw.types.DocumentAttributeSticker],
-                                file_name
-                            )
-                            media_type = "sticker"
                         else:
                             document = types.Document._parse(client, doc, file_name)
                             media_type = "document"
@@ -806,15 +816,19 @@ class Message(Object, Update):
                 client=client
             )
 
-            if message.reply_to and replies:
-                try:
-                    parsed_message.reply_to_message = await client.get_messages(
-                        parsed_message.chat.id,
-                        reply_to_message_ids=message.id,
-                        replies=replies - 1
-                    )
-                except MessageIdsEmpty:
-                    pass
+            if message.reply_to:
+                if replies:
+                    try:
+                        parsed_message.reply_to_message = await client.get_messages(
+                            parsed_message.chat.id,
+                            reply_to_message_ids=message.id,
+                            replies=replies - 1
+                        )
+                    except MessageIdsEmpty:
+                        pass
+
+                parsed_message.reply_to_message_id = message.reply_to.reply_to_msg_id
+                parsed_message.reply_to_top_message_id = message.reply_to.reply_to_top_id
 
             return parsed_message
 
@@ -1904,7 +1918,7 @@ class Message(Object, Update):
                 If *reply_to_message_id* is passed, this parameter will be ignored.
                 Defaults to ``True`` in group chats and ``False`` in private chats.
 
-            caption (``bool``, *optional*):
+            caption (``str``, *optional*):
                 Photo caption, 0-1024 characters.
 
             parse_mode (``str``, *optional*):
