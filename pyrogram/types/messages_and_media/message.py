@@ -3437,7 +3437,7 @@ class Message(Object, Update):
             options=option
         )
 
-    async def pin(self, disable_notification: bool = False, both_sides: bool = False) -> bool:
+    async def pin(self, disable_notification: bool = False, both_sides: bool = False) -> "types.Message":
         """Bound method *pin* of :obj:`~pyrogram.types.Message`.
 
         Use as a shortcut for:
@@ -3464,7 +3464,7 @@ class Message(Object, Update):
                 Applicable to private chats only. Defaults to False.
 
         Returns:
-            True on success.
+            :obj:`~pyrogram.types.Message`: On success, the service message is returned.
 
         Raises:
             RPCError: In case of a Telegram RPC error.
