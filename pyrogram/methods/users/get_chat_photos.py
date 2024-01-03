@@ -81,25 +81,15 @@ class GetChatPhotos:
                 )
             )
 
-            extra = [message.new_chat_photo for message in r]
-
-            if extra:
+            if extra := [message.new_chat_photo for message in r]:
                 if current:
                     photos = ([current] + extra) if current.file_id != extra[0].file_id else extra
                 else:
                     photos = extra
             else:
-                if current:
-                    photos = [current]
-                else:
-                    photos = []
-
-            current = 0
-
-            for photo in photos:
+                photos = [current] if current else []
+            for current, photo in enumerate(photos, start=1):
                 yield photo
-
-                current += 1
 
                 if current >= limit:
                     return

@@ -47,13 +47,12 @@ class GetSimilarChannels:
         """
         chat = await self.resolve_peer(chat_id)
 
-        if isinstance(chat, raw.types.InputPeerChannel):
-            r = await self.invoke(
-                raw.functions.channels.GetChannelRecommendations(
-                    channel=chat
-                )
-            )
-
-            return types.List([types.Chat._parse_channel_chat(self, chat) for chat in r.chats]) or None
-        else:
+        if not isinstance(chat, raw.types.InputPeerChannel):
             raise ValueError(f'The chat_id "{chat_id}" belongs to a user or chat')
+        r = await self.invoke(
+            raw.functions.channels.GetChannelRecommendations(
+                channel=chat
+            )
+        )
+
+        return types.List([types.Chat._parse_channel_chat(self, chat) for chat in r.chats]) or None

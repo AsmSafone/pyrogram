@@ -112,9 +112,7 @@ class ForumTopic(Object):
     def _parse(client: "pyrogram.Client", forum_topic: "raw.types.ForumTopic", messages: dict = {},  users: dict = {}, chats: dict = {}) -> "ForumTopic":
         creator = None
 
-        peer = getattr(forum_topic, "from_id", None)
-
-        if peer:
+        if peer := getattr(forum_topic, "from_id", None):
             peer_id = utils.get_raw_peer_id(peer)
 
             if isinstance(peer, raw.types.PeerUser):

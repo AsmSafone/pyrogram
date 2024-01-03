@@ -49,11 +49,8 @@ class IncrementStoryViews:
                 # Increment story views
                 await app.increment_story_views(chat_id, 1)
         """
-        r = await self.invoke(
+        return await self.invoke(
             raw.functions.stories.IncrementStoryViews(
-                peer=await self.resolve_peer(chat_id),
-                id=story_id
+                peer=await self.resolve_peer(chat_id), id=story_id
             )
         )
-
-        return r

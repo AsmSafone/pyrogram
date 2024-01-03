@@ -82,7 +82,7 @@ class GetPinnedStories:
                 peer_id = utils.get_raw_peer_id(peer)
                 if peer_id not in r.chats:
                     channel = await self.invoke(raw.functions.channels.GetChannels(id=[peer]))
-                    chats.update({peer_id: channel.chats[0]})
+                    chats[peer_id] = channel.chats[0]
 
             last = r.stories[-1]
             offset_id = last.id

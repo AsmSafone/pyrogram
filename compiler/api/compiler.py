@@ -127,11 +127,10 @@ def get_type_hint(type: str) -> str:
 
     if is_core:
         return f"Optional[{type}] = None" if is_flag else type
-    else:
-        ns, name = type.split(".") if "." in type else ("", type)
-        type = f'"raw.base.' + ".".join([ns, name]).strip(".") + '"'
+    ns, name = type.split(".") if "." in type else ("", type)
+    type = '"raw.base.' + ".".join([ns, name]).strip(".") + '"'
 
-        return f'{type}{" = None" if is_flag else ""}'
+    return f'{type}{" = None" if is_flag else ""}'
 
 
 def sort_args(args):
@@ -175,7 +174,7 @@ def get_docstring_arg_type(t: str):
             return "``bool``"
         else:
             return f"``{t.lower()}``"
-    elif t == "TLObject" or t == "X":
+    elif t in {"TLObject", "X"}:
         return "Any object from :obj:`~pyrogram.raw.types`"
     elif t == "!X":
         return "Any function from :obj:`~pyrogram.raw.functions`"
@@ -193,10 +192,7 @@ def get_references(t: str, kind: str):
     else:
         raise ValueError("Invalid kind")
 
-    if t:
-        return "\n            ".join(t), len(t)
-
-    return None, 0
+    return ("\n            ".join(t), len(t)) if t else (None, 0)
 
 
 # noinspection PyShadowingBuiltins

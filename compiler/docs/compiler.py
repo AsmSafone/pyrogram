@@ -50,7 +50,7 @@ def generate(source_path, base):
                 if not i.startswith("__"):
                     build("/".join([path, i]), level=level + 1)
             except NotADirectoryError:
-                with open(path + "/" + i, encoding="utf-8") as f:
+                with open(f"{path}/{i}", encoding="utf-8") as f:
                     p = ast.parse(f.read())
 
                 for node in ast.walk(p):
@@ -60,20 +60,24 @@ def generate(source_path, base):
                 else:
                     continue
 
-                full_path = os.path.basename(path) + "/" + snek(name).replace("_", "-") + ".rst"
+                full_path = (
+                    f"{os.path.basename(path)}/"
+                    + snek(name).replace("_", "-")
+                    + ".rst"
+                )
 
                 if level:
-                    full_path = base + "/" + full_path
+                    full_path = f"{base}/{full_path}"
 
                 namespace = path.split("/")[-1]
                 if namespace in ["base", "types", "functions"]:
                     namespace = ""
 
-                full_name = f"{(namespace + '.') if namespace else ''}{name}"
+                full_name = f"{f'{namespace}.' if namespace else ''}{name}"
 
-                os.makedirs(os.path.dirname(DESTINATION + "/" + full_path), exist_ok=True)
+                os.makedirs(os.path.dirname(f"{DESTINATION}/{full_path}"), exist_ok=True)
 
-                with open(DESTINATION + "/" + full_path, "w", encoding="utf-8") as f:
+                with open(f"{DESTINATION}/{full_path}", "w", encoding="utf-8") as f:
                     f.write(
                         page_template.format(
                             title=full_name,
@@ -99,20 +103,20 @@ def generate(source_path, base):
             entities.append(f'{i} <{snek(i).replace("_", "-")}>')
 
         if k != base:
-            inner_path = base + "/" + k + "/index" + ".rst"
+            inner_path = f"{base}/{k}/index.rst"
             module = "pyrogram.raw.{}.{}".format(base, k)
         else:
             for i in sorted(list(all_entities), reverse=True):
                 if i != base:
                     entities.insert(0, "{0}/index".format(i))
 
-            inner_path = base + "/index" + ".rst"
+            inner_path = f"{base}/index.rst"
             module = "pyrogram.raw.{}".format(base)
 
-        with open(DESTINATION + "/" + inner_path, "w", encoding="utf-8") as f:
+        with open(f"{DESTINATION}/{inner_path}", "w", encoding="utf-8") as f:
             if k == base:
                 f.write(":tocdepth: 1\n\n")
-                k = "Raw " + k
+                k = f"Raw {k}"
 
             f.write(
                 toctree.format(
@@ -376,20 +380,20 @@ def pyrogram_api():
         """
     )
 
-    root = PYROGRAM_API_DEST + "/methods"
+    root = f"{PYROGRAM_API_DEST}/methods"
 
     shutil.rmtree(root, ignore_errors=True)
     os.mkdir(root)
 
-    with open(HOME + "/template/methods.rst") as f:
+    with open(f"{HOME}/template/methods.rst") as f:
         template = f.read()
 
-    with open(root + "/index.rst", "w") as f:
+    with open(f"{root}/index.rst", "w") as f:
         fmt_keys = {}
 
         for k, v in categories.items():
             name, *methods = get_title_list(v)
-            fmt_keys.update({k: "\n    ".join("{0} <{0}>".format(m) for m in methods)})
+            fmt_keys[k] = "\n    ".join("{0} <{0}>".format(m) for m in methods)
 
             for method in methods:
                 with open(root + "/{}.rst".format(method), "w") as f2:
@@ -551,21 +555,21 @@ def pyrogram_api():
         """
     )
 
-    root = PYROGRAM_API_DEST + "/types"
+    root = f"{PYROGRAM_API_DEST}/types"
 
     shutil.rmtree(root, ignore_errors=True)
     os.mkdir(root)
 
-    with open(HOME + "/template/types.rst") as f:
+    with open(f"{HOME}/template/types.rst") as f:
         template = f.read()
 
-    with open(root + "/index.rst", "w") as f:
+    with open(f"{root}/index.rst", "w") as f:
         fmt_keys = {}
 
         for k, v in categories.items():
             name, *types = get_title_list(v)
 
-            fmt_keys.update({k: "\n    ".join(types)})
+            fmt_keys[k] = "\n    ".join(types)
 
             # noinspection PyShadowingBuiltins
             for type in types:
@@ -697,24 +701,27 @@ def pyrogram_api():
         """
     )
 
-    root = PYROGRAM_API_DEST + "/bound-methods"
+    root = f"{PYROGRAM_API_DEST}/bound-methods"
 
     shutil.rmtree(root, ignore_errors=True)
     os.mkdir(root)
 
-    with open(HOME + "/template/bound-methods.rst") as f:
+    with open(f"{HOME}/template/bound-methods.rst") as f:
         template = f.read()
 
-    with open(root + "/index.rst", "w") as f:
+    with open(f"{root}/index.rst", "w") as f:
         fmt_keys = {}
 
         for k, v in categories.items():
             name, *bound_methods = get_title_list(v)
 
-            fmt_keys.update({"{}_hlist".format(k): "\n    ".join("- :meth:`~{}`".format(bm) for bm in bound_methods)})
+            fmt_keys["{}_hlist".format(k)] = "\n    ".join(
+                "- :meth:`~{}`".format(bm) for bm in bound_methods
+            )
 
-            fmt_keys.update(
-                {"{}_toctree".format(k): "\n    ".join("{} <{}>".format(bm.split(".")[1], bm) for bm in bound_methods)})
+            fmt_keys["{}_toctree".format(k)] = "\n    ".join(
+                "{} <{}>".format(bm.split(".")[1], bm) for bm in bound_methods
+            )
 
             # noinspection PyShadowingBuiltins
             for bm in bound_methods:
@@ -733,10 +740,10 @@ def start():
 
     shutil.rmtree(DESTINATION, ignore_errors=True)
 
-    with open(HOME + "/template/page.txt", encoding="utf-8") as f:
+    with open(f"{HOME}/template/page.txt", encoding="utf-8") as f:
         page_template = f.read()
 
-    with open(HOME + "/template/toctree.txt", encoding="utf-8") as f:
+    with open(f"{HOME}/template/toctree.txt", encoding="utf-8") as f:
         toctree = f.read()
 
     generate(TYPES_PATH, TYPES_BASE)
@@ -745,7 +752,7 @@ def start():
     pyrogram_api()
 
 
-if "__main__" == __name__:
+if __name__ == "__main__":
     FUNCTIONS_PATH = "../../pyrogram/raw/functions"
     TYPES_PATH = "../../pyrogram/raw/types"
     BASE_PATH = "../../pyrogram/raw/base"

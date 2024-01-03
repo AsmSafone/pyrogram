@@ -80,11 +80,10 @@ class GetForumTopics:
 
                 messages[message.id] = await types.Message._parse(self, message, users, chats)
 
-            topics = []
-
-            for topic in r.topics:
-                topics.append(types.ForumTopic._parse(self, topic, messages, users, chats))
-
+            topics = [
+                types.ForumTopic._parse(self, topic, messages, users, chats)
+                for topic in r.topics
+            ]
             if not topics:
                 return
 

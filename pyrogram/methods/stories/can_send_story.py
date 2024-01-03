@@ -44,10 +44,8 @@ class CanSendStory:
                 # Check if you can send story to chat id
                 app.can_send_story(chat_id)
         """
-        r = await self.invoke(
+        return await self.invoke(
             raw.functions.stories.CanSendStory(
                 peer=await self.resolve_peer(chat_id),
             )
         )
-
-        return r

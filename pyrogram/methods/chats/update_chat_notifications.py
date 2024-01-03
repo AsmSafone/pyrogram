@@ -77,17 +77,17 @@ class UpdateChatNotifications:
         if not mute_until:
             mute_until = utils.max_datetime() if mute else utils.zero_datetime()
 
-        r = await self.invoke(
+        return await self.invoke(
             raw.functions.account.UpdateNotifySettings(
-                peer=raw.types.InputNotifyPeer(peer=await self.resolve_peer(chat_id)),
+                peer=raw.types.InputNotifyPeer(
+                    peer=await self.resolve_peer(chat_id)
+                ),
                 settings=raw.types.InputPeerNotifySettings(
                     show_previews=show_previews,
                     silent=mute,
                     mute_until=utils.datetime_to_timestamp(mute_until),
                     stories_muted=stories_muted,
                     stories_hide_sender=stories_hide_sender,
-                )
+                ),
             )
         )
-
-        return r

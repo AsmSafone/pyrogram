@@ -82,11 +82,10 @@ class SendReaction:
                     else raw.types.ReactionEmoji(emoticon=i)
                     for i in emoji
             ] if emoji else None
+        elif isinstance(emoji, int):
+            emoji = [raw.types.ReactionCustomEmoji(document_id=emoji)]
         else:
-            if isinstance(emoji, int):
-                emoji = [raw.types.ReactionCustomEmoji(document_id=emoji)]
-            else:
-                emoji = [raw.types.ReactionEmoji(emoticon=emoji)] if emoji else None
+            emoji = [raw.types.ReactionEmoji(emoticon=emoji)] if emoji else None
 
         if story_id:
             rpc = raw.functions.stories.SendReaction(

@@ -38,10 +38,6 @@ class DeleteFolder:
                 # Delete folder
                 app.delete_folder(123456789)
         """
-        r = await self.invoke(
-            raw.functions.messages.UpdateDialogFilter(
-                id=folder_id
-            )
+        return await self.invoke(
+            raw.functions.messages.UpdateDialogFilter(id=folder_id)
         )
-
-        return r

@@ -173,30 +173,29 @@ class SendPhoto:
         file = None
 
         try:
-            if isinstance(photo, str):
-                if os.path.isfile(photo):
-                    file = await self.save_file(photo, progress=progress, progress_args=progress_args)
-                    media = raw.types.InputMediaUploadedPhoto(
-                        file=file,
-                        ttl_seconds=ttl_seconds,
-                        spoiler=has_spoiler,
-                    )
-                elif re.match("^https?://", photo):
-                    media = raw.types.InputMediaPhotoExternal(
-                        url=photo,
-                        ttl_seconds=ttl_seconds,
-                        spoiler=has_spoiler
-                    )
-                else:
-                    media = utils.get_input_media_from_file_id(photo, FileType.PHOTO, ttl_seconds=ttl_seconds, has_spoiler=has_spoiler)
-            else:
+            if (
+                isinstance(photo, str)
+                and os.path.isfile(photo)
+                or not isinstance(photo, str)
+            ):
                 file = await self.save_file(photo, progress=progress, progress_args=progress_args)
                 media = raw.types.InputMediaUploadedPhoto(
                     file=file,
                     ttl_seconds=ttl_seconds,
+                    spoiler=has_spoiler,
+                )
+            elif (
+                isinstance(photo, str)
+                and not os.path.isfile(photo)
+                and re.match("^https?://", photo)
+            ):
+                media = raw.types.InputMediaPhotoExternal(
+                    url=photo,
+                    ttl_seconds=ttl_seconds,
                     spoiler=has_spoiler
                 )
-
+            else:
+                media = utils.get_input_media_from_file_id(photo, FileType.PHOTO, ttl_seconds=ttl_seconds, has_spoiler=has_spoiler)
             quote_text, quote_entities = (await utils.parse_text_entities(self, quote_text, parse_mode, quote_entities)).values()
 
             while True:

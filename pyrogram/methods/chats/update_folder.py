@@ -107,7 +107,7 @@ class UpdateFolder:
         if not isinstance(pinned_chats, list):
             pinned_chats = [pinned_chats]
 
-        r = await self.invoke(
+        return await self.invoke(
             raw.functions.messages.UpdateDialogFilter(
                 id=folder_id,
                 filter=raw.types.DialogFilter(
@@ -133,9 +133,7 @@ class UpdateFolder:
                     exclude_muted=exclude_muted,
                     exclude_read=exclude_read,
                     exclude_archived=exclude_archived,
-                    emoticon=emoji
-                )
+                    emoticon=emoji,
+                ),
             )
         )
-
-        return r

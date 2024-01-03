@@ -41,11 +41,7 @@ class Link(str):
 
     @staticmethod
     def format(url: str, text: str, style: enums.ParseMode):
-        if style == enums.ParseMode.MARKDOWN:
-            fmt = Link.MARKDOWN
-        else:
-            fmt = Link.HTML
-
+        fmt = Link.MARKDOWN if style == enums.ParseMode.MARKDOWN else Link.HTML
         return fmt.format(url=url, text=html.escape(text))
 
     # noinspection PyArgumentList
