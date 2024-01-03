@@ -195,6 +195,7 @@ def pyrogram_api():
             get_discussion_replies
             get_discussion_replies_count
             get_custom_emoji_stickers
+            send_web_page
         """,
         chats="""
         Chats
@@ -237,6 +238,20 @@ def pyrogram_api():
             get_send_as_chats
             set_send_as_chat
             set_chat_protected_content
+            close_forum_topic
+            create_forum_topic
+            delete_forum_topic
+            edit_forum_topic
+            get_forum_topics
+            get_forum_topics_by_id
+            update_color
+            update_chat_notifications
+            toggle_forum_topics
+            delete_folder
+            export_folder_link
+            get_folders
+            update_folder
+            get_similar_channels
         """,
         users="""
         Users
@@ -253,6 +268,7 @@ def pyrogram_api():
             get_common_chats
             get_default_emoji_statuses
             set_emoji_status
+            update_status
         """,
         invite_links="""
         Invite Links
@@ -330,6 +346,33 @@ def pyrogram_api():
             invoke
             resolve_peer
             save_file
+        """,
+        stories="""
+        Stories
+            can_send_story
+            copy_story
+            delete_stories
+            edit_story_caption
+            edit_story_media
+            edit_story_privacy
+            export_story_link
+            forward_story
+            get_all_stories
+            get_chat_stories
+            get_pinned_stories
+            get_stories_archive
+            get_stories
+            hide_stories
+            increment_story_views
+            pin_stories
+            read_stories
+            send_story
+        """,
+        premium="""
+        Premium
+            apply_boost
+            get_boosts
+            get_boosts_status
         """
     )
 
@@ -388,6 +431,8 @@ def pyrogram_api():
             Dialog
             Restriction
             EmojiStatus
+            Folder
+            ChatColor
         """,
         messages_media="""
         Messages & Media
@@ -418,6 +463,12 @@ def pyrogram_api():
             WebAppData
             MessageReactions
             ChatReactions
+            Story
+            MyBoost
+            BoostsStatus
+            Giveaway
+            GiveawayResult
+            GiftCode
         """,
         bot_keyboards="""
         Bot keyboards
@@ -437,6 +488,11 @@ def pyrogram_api():
             MenuButtonWebApp
             MenuButtonDefault
             SentWebAppMessage
+            ForumTopic
+            RequestChannelInfo
+            RequestChatInfo
+            RequestUserInfo
+            RequestPollInfo
         """,
         bot_commands="""
         Bot commands
@@ -579,6 +635,8 @@ def pyrogram_api():
             Chat.mark_unread
             Chat.set_protected_content
             Chat.unpin_all_messages
+            Chat.mute
+            Chat.unmute
         """,
         user="""
         User
@@ -603,6 +661,39 @@ def pyrogram_api():
         ChatJoinRequest
             ChatJoinRequest.approve
             ChatJoinRequest.decline
+        """,
+        story="""
+        Story
+            Story.reply_text
+            Story.reply_animation
+            Story.reply_audio
+            Story.reply_cached_media
+            Story.reply_media_group
+            Story.reply_photo
+            Story.reply_sticker
+            Story.reply_video
+            Story.reply_video_note
+            Story.reply_voice
+            Story.delete
+            Story.download
+            Story.edit_media
+            Story.edit_caption
+            Story.edit_privacy
+            Story.export_link
+            Story.react
+            Story.copy
+            Story.forward
+            Story.read
+        """,
+        folder="""
+        Folder
+            Folder.delete
+            Folder.update
+            Folder.include_chat
+            Folder.exclude_chat
+            Folder.pin_chat
+            Folder.remove_chat
+            Folder.export_link
         """
     )
 

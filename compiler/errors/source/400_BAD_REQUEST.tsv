@@ -18,6 +18,7 @@ AUTOARCHIVE_NOT_AVAILABLE	This feature is not yet enabled for your account due t
 BANK_CARD_NUMBER_INVALID	The credit card number is invalid
 BANNED_RIGHTS_INVALID	You provided a set of restrictions that is invalid
 BASE_PORT_LOC_INVALID	The base port location is invalid
+BOOSTS_REQUIRED	Boosts required
 BOTS_TOO_MUCH	The chat has too many bots
 BOT_CHANNELS_NA	Bots can't edit admin privileges
 BOT_COMMAND_DESCRIPTION_INVALID	The command description was empty, too long or had invalid characters
@@ -49,6 +50,7 @@ CHANNELS_ADMIN_PUBLIC_TOO_MUCH	You are an administrator of too many public chann
 CHANNELS_TOO_MUCH	You have joined too many channels or supergroups, leave some and try again
 CHANNEL_ADD_INVALID	Internal error.
 CHANNEL_BANNED	The channel is banned
+CHANNEL_FORUM_MISSING	The channel forum is missing
 CHANNEL_INVALID	The channel parameter is invalid
 CHANNEL_PRIVATE	The channel/supergroup is not accessible
 CHANNEL_TOO_LARGE	The channel is too large
@@ -56,6 +58,7 @@ CHAT_ABOUT_NOT_MODIFIED	The chat about text was not modified because you tried t
 CHAT_ABOUT_TOO_LONG	The chat about text is too long
 CHAT_ADMIN_REQUIRED	The method requires chat admin privileges
 CHAT_FORWARDS_RESTRICTED	The chat restricts forwarding content
+CHAT_DISCUSSION_UNALLOWED	The chat discussion is not allowed
 CHAT_ID_EMPTY	The provided chat id is empty
 CHAT_ID_INVALID	The chat id being used is invalid or not known yet. Make sure you see the chat before interacting with it
 CHAT_INVALID	The chat is invalid
@@ -69,6 +72,7 @@ CHAT_TOO_BIG	The chat is too big for this action
 CODE_EMPTY	The provided code is empty
 CODE_HASH_INVALID	The provided code hash invalid
 CODE_INVALID	The provided code is invalid (i.e. from email)
+COLOR_INVALID	The provided color is invalid
 CONNECTION_API_ID_INVALID	The provided API id is invalid
 CONNECTION_APP_VERSION_EMPTY	App version is empty
 CONNECTION_DEVICE_MODEL_EMPTY	The device model is empty
@@ -124,6 +128,7 @@ FILE_REFERENCE_EMPTY	The file id contains an empty file reference, you must obta
 FILE_REFERENCE_EXPIRED	The file id contains an expired file reference, you must obtain a valid one by fetching the message from the origin context
 FILE_REFERENCE_INVALID	The file id contains an invalid file reference, you must obtain a valid one by fetching the message from the origin context
 FILTER_ID_INVALID	The specified filter ID is invalid
+FILTER_INCLUDE_EMPTY	The filter include is empty
 FIRSTNAME_INVALID	The first name is invalid
 FOLDER_ID_EMPTY	The folder you tried to delete was already empty
 FOLDER_ID_INVALID	The folder id is invalid
@@ -134,6 +139,7 @@ GAME_BOT_INVALID	You cannot send that game with the current bot
 GEO_POINT_INVALID	Invalid geo point provided
 GIF_CONTENT_TYPE_INVALID	GIF content-type invalid
 GIF_ID_INVALID	The provided gif/animation id is invalid
+GIFT_SLUG_EXPIRED	The gift slug is expired
 GRAPH_INVALID_RELOAD	Invalid graph token provided, please reload the stats and provide the updated token
 GRAPH_OUTDATED_RELOAD	The graph data is outdated
 GROUPCALL_SSRC_DUPLICATE_MUCH	Too many group call synchronization source duplicates
@@ -158,6 +164,7 @@ INVITE_HASH_EXPIRED	The chat invite link is no longer valid
 INVITE_HASH_INVALID	The invite link hash is invalid
 INVITE_REQUEST_SENT	The request to join this chat or channel has been successfully sent
 INVITE_REVOKED_MISSING	The action required a chat invite link to be revoked first
+INVITE_SLUG_EMPTY	The invite slug is empty
 LANG_PACK_INVALID	The provided language pack is invalid
 LASTNAME_INVALID	The last name is invalid
 LIMIT_INVALID	The limit parameter is invalid
@@ -168,9 +175,12 @@ MAX_QTS_INVALID	The provided QTS is invalid
 MD5_CHECKSUM_INVALID	The file's checksum did not match the md5_checksum parameter
 MEDIA_CAPTION_TOO_LONG	The media caption is too long
 MEDIA_EMPTY	The media you tried to send is invalid
+MEDIA_FILE_INVALID	The media file is invalid
 MEDIA_INVALID	The media is invalid
 MEDIA_NEW_INVALID	The new media to edit the message with is invalid
 MEDIA_PREV_INVALID	The previous media cannot be edited with anything else
+MEDIA_TTL_INVALID	The media ttl is invalid
+MEDIA_VIDEO_STORY_MISSING	The media does not have a photo or a video
 MEGAGROUP_ID_INVALID	The supergroup is invalid
 MEGAGROUP_PREHISTORY_HIDDEN	The action failed because the supergroup has the pre-history hidden
 MEGAGROUP_REQUIRED	The request can only be used with a supergroup
@@ -183,6 +193,7 @@ MESSAGE_POLL_CLOSED	You can't interact with a closed poll
 MESSAGE_TOO_LONG	The message text is too long
 METHOD_INVALID	The API method is invalid and cannot be used
 MSG_ID_INVALID	The message ID used in the peer was invalid
+MSG_VOICE_MISSING	The message does not contain a voice message
 MSG_WAIT_FAILED	A waiting call returned an error
 MULTI_MEDIA_TOO_LONG	The album/media group contains too many items
 NEW_SALT_INVALID	The new salt is invalid
@@ -240,6 +251,7 @@ POLL_OPTION_INVALID	A poll option used invalid data (the data may be too long)
 POLL_QUESTION_INVALID	The poll question is invalid
 POLL_UNSUPPORTED	This layer does not support polls in the invoked method
 POLL_VOTE_REQUIRED	Cast a vote in the poll before calling this method
+PREMIUM_ACCOUNT_REQUIRED	The method requires a premium user account
 PRIVACY_KEY_INVALID	The privacy key is invalid
 PRIVACY_TOO_LONG	Your privacy exception list has exceeded the maximum capacity
 PRIVACY_VALUE_INVALID	The privacy value is invalid
@@ -250,6 +262,7 @@ QUIZ_CORRECT_ANSWERS_EMPTY	The correct answers of the quiz are empty
 QUIZ_CORRECT_ANSWERS_TOO_MUCH	The quiz contains too many correct answers
 QUIZ_CORRECT_ANSWER_INVALID	The correct answers of the quiz are invalid
 QUIZ_MULTIPLE_INVALID	A quiz can't have multiple answers
+QUOTE_TEXT_INVALID	The quote text is invalid
 RANDOM_ID_EMPTY	The random ID is empty
 RANDOM_ID_INVALID	The provided random ID is invalid
 RANDOM_LENGTH_INVALID	The random length is invalid
@@ -261,6 +274,7 @@ REPLY_MARKUP_BUY_EMPTY	Reply markup for buy button empty
 REPLY_MARKUP_GAME_EMPTY	The provided reply markup for the game is empty
 REPLY_MARKUP_INVALID	The provided reply markup is invalid
 REPLY_MARKUP_TOO_LONG	The reply markup is too long
+REPLY_MESSAGE_ID_INVALID	The reply message id is invalid
 RESULTS_TOO_MUCH	The result contains too many items
 RESULT_ID_DUPLICATE	The result contains items with duplicated identifiers
 RESULT_ID_EMPTY	Result ID empty
@@ -302,6 +316,8 @@ STICKER_PNG_NOPNG	Stickers must be png files but the provided image was not a pn
 STICKER_TGS_NOTGS	A tgs sticker file was expected, but something else was provided
 STICKER_THUMB_PNG_NOPNG	A png sticker thumbnail file was expected, but something else was provided
 STICKER_VIDEO_NOWEBM	A webm video file was expected, but something else was provided
+STORIES_TOO_MUCH	Too many stories in the current account
+STORY_PERIOD_INVALID	The story period is invalid
 TAKEOUT_INVALID	The takeout id is invalid
 TAKEOUT_REQUIRED	The method must be invoked inside a takeout session
 TEMP_AUTH_KEY_EMPTY	The temporary auth key provided is empty
@@ -312,8 +328,13 @@ THEME_MIME_INVALID	You cannot create this theme because the mime-type is invalid
 TMP_PASSWORD_DISABLED	The temporary password is disabled
 TMP_PASSWORD_INVALID	The temporary password is invalid
 TOKEN_INVALID	The provided token is invalid
+TOPIC_CLOSED	The topic was closed
+TOPIC_DELETED	The topic was deleted
+TOPIC_NOT_MODIFIED	The topic was not modified
+TRANSCRIPTION_FAILED	Telegram is having internal problems. Please try again later to transcribe the audio.
 TTL_DAYS_INVALID	The provided TTL days is invalid
 TTL_MEDIA_INVALID	The media does not support self-destruction
+TTL_PERIOD_INVALID	The provided TTL period is invalid
 TYPES_EMPTY	The types parameter is empty
 TYPE_CONSTRUCTOR_INVALID	The type constructor is invalid
 UNTIL_DATE_INVALID	That date parameter is invalid
@@ -323,6 +344,7 @@ USERNAME_INVALID	The username is invalid
 USERNAME_NOT_MODIFIED	The username was not modified because you tried to edit it using the same one
 USERNAME_NOT_OCCUPIED	The username is not occupied by anyone
 USERNAME_OCCUPIED	The username is already in use by someone else
+USERNAME_PURCHASE_AVAILABLE	The username is available for purchase on fragment.com
 USERPIC_UPLOAD_REQUIRED	You are required to upload a profile picture for this action
 USERS_TOO_FEW	Not enough users (to create a chat, for example)
 USERS_TOO_MUCH	The maximum number of users has been exceeded (to create a chat, for example)
@@ -358,3 +380,5 @@ WEBDOCUMENT_URL_INVALID	The web document URL is invalid
 WEBPAGE_CURL_FAILED	Telegram server could not fetch the provided URL
 WEBPAGE_MEDIA_EMPTY	The URL doesn't contain any valid media
 YOU_BLOCKED_USER	You blocked this user
+STORIES_NEVER_CREATED	You have never created any stories
+MEDIA_FILE_INVALID	The provided media file is invalid
