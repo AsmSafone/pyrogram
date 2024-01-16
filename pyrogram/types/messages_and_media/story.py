@@ -213,7 +213,7 @@ class Story(Object, Update):
             peer_id = utils.get_raw_peer_id(peer)
             if peer_id not in chats:
                 r = await client.invoke(raw.functions.channels.GetChannels(id=[peer]))
-                chats.update({peer_id: r.chats[0]})
+                chats[peer_id] = r.chats[0]
         else:
             peer_id = utils.get_raw_peer_id(peer)
 
@@ -260,9 +260,7 @@ class Story(Object, Update):
         forward_from_chat = None
         forward_from_story_id = None
 
-        forward_header = story.fwd_from  # type: raw.types.StoryFwdHeader
-
-        if forward_header:
+        if forward_header := story.fwd_from:
             fwd_raw_peer_id = utils.get_raw_peer_id(forward_header.from_peer)
             fwd_peer_id = utils.get_peer_id(forward_header.from_peer)
 

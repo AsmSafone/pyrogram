@@ -153,9 +153,7 @@ class Markdown:
             else:
                 continue
 
-            entities_offsets.append((start_tag, start,))
-            entities_offsets.append((end_tag, end,))
-
+            entities_offsets.extend(((start_tag, start), (end_tag, end)))
         entities_offsets = map(
             lambda x: x[1],
             sorted(
