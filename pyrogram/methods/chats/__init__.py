@@ -47,7 +47,9 @@ from .get_forum_topics_by_id import GetForumTopicsByID
 from .get_nearby_chats import GetNearbyChats
 from .get_send_as_chats import GetSendAsChats
 from .join_chat import JoinChat
+from .join_folder import JoinFolder
 from .leave_chat import LeaveChat
+from .leave_folder import LeaveFolder
 from .mark_chat_unread import MarkChatUnread
 from .pin_chat_message import PinChatMessage
 from .promote_chat_member import PromoteChatMember
@@ -58,6 +60,7 @@ from .set_chat_permissions import SetChatPermissions
 from .set_chat_photo import SetChatPhoto
 from .set_chat_protected_content import SetChatProtectedContent
 from .set_chat_title import SetChatTitle
+from .set_chat_ttl import SetChatTTL
 from .set_chat_username import SetChatUsername
 from .set_send_as_chat import SetSendAsChat
 from .set_slow_mode import SetSlowMode
@@ -74,7 +77,9 @@ from .update_folder import UpdateFolder
 class Chats(
     GetChat,
     LeaveChat,
+    LeaveFolder,
     JoinChat,
+    JoinFolder,
     BanChatMember,
     UnbanChatMember,
     RestrictChatMember,
@@ -85,6 +90,7 @@ class Chats(
     DeleteChatPhoto,
     DeleteFolder,
     SetChatTitle,
+    SetChatTTL,
     SetChatDescription,
     PinChatMessage,
     UnpinChatMessage,

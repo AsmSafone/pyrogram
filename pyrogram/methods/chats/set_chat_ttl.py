@@ -1,5 +1,5 @@
 #  Pyrogram - Telegram MTProto API Client Library for Python
-#  Copyright (C) 2017-present Dan <https://github.com/delivrance>
+#  Copyright (C) 2017-2021 Dan <https://github.com/delivrance>
 #
 #  This file is part of Pyrogram.
 #
@@ -20,41 +20,45 @@ from typing import Union
 
 import pyrogram
 from pyrogram import raw
+from pyrogram import types
 
 
-class ExportStoryLink:
-    async def export_story_link(
+class SetChatTTL:
+    async def set_chat_ttl(
         self: "pyrogram.Client",
         chat_id: Union[int, str],
-        story_id: int,
-    ) -> str:
-        """Export a story link.
-
-        .. include:: /_includes/usable-by/users.rst
+        ttl_seconds: int
+    ) -> "types.Message":
+        """Set the time-to-live for the chat.
 
         Parameters:
             chat_id (``int`` | ``str``):
                 Unique identifier (int) or username (str) of the target chat.
-                For your personal cloud (Saved Messages) you can simply use "me" or "self".
-                For a contact that exists in your Telegram address book you can use his phone number (str).
 
-            story_id (``int``):
-                Unique identifier of the target story.
+            ttl_seconds (``int``):
+                The time-to-live for the chat.
+                Either 86000 for 1 day, 604800 for 1 week or 0 (zero) to disable it.
 
         Returns:
-            ``str``: On success, a link to the exported story is returned.
+            ``bool``: True on success.
 
         Example:
             .. code-block:: python
 
-                # Export a story link
-                link = app.export_story_link(chat_id, 1)
+                # Set TTL for a chat to 1 day
+                app.set_chat_ttl(chat_id, 86400)
+
+                # Set TTL for a chat to 1 week
+                app.set_chat_ttl(chat_id, 604800)
+
+                # Disable TTL for this chat
+                app.set_chat_ttl(chat_id, 0)
         """
-        r = await self.invoke(
-            raw.functions.stories.ExportStoryLink(
+        await self.invoke(
+            raw.functions.messages.SetHistoryTTL(
                 peer=await self.resolve_peer(chat_id),
-                id=story_id
+                period=ttl_seconds,
             )
         )
 
-        return r.link
+        return True

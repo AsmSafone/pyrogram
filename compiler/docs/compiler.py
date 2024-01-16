@@ -252,6 +252,8 @@ def pyrogram_api():
             get_folders
             update_folder
             get_similar_channels
+            join_folder
+            leave_folder
         """,
         users="""
         Users
@@ -355,7 +357,6 @@ def pyrogram_api():
             edit_story_caption
             edit_story_media
             edit_story_privacy
-            export_story_link
             forward_story
             get_all_stories
             get_chat_stories
@@ -637,6 +638,7 @@ def pyrogram_api():
             Chat.unpin_all_messages
             Chat.mute
             Chat.unmute
+            Chat.set_ttl
         """,
         user="""
         User
