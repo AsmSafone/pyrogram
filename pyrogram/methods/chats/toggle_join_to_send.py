@@ -16,46 +16,50 @@
 #  You should have received a copy of the GNU Lesser General Public License
 #  along with Pyrogram.  If not, see <http://www.gnu.org/licenses/>.
 
-from typing import Union, List
+from typing import Union
 
 import pyrogram
 from pyrogram import raw
+from pyrogram import errors
 
 
-class IncrementStoryViews:
-    async def increment_story_views(
+class ToggleJoinToSend:
+    async def toggle_join_to_send(
         self: "pyrogram.Client",
         chat_id: Union[int, str],
-        story_id: Union[int, List[int]],
+        enabled: bool = False
     ) -> bool:
-        """Increment story views.
+        """Enable or disable guest users' ability to send messages in a supergroup.
 
         .. include:: /_includes/usable-by/users.rst
 
         Parameters:
             chat_id (``int`` | ``str``):
                 Unique identifier (int) or username (str) of the target chat.
-                For a contact that exists in your Telegram address book you can use his phone number (str).
 
-            story_id (``int`` | List of ``int``):
-                Identifier or list of story identifiers of the target story.
+            enabled (``bool``):
+                The new status. Pass True to enable guest users to send message.
 
         Returns:
-            ``bool``: On success, True is returned.
+            ``bool``: True on success. False otherwise.
 
         Example:
             .. code-block:: python
 
-                # Increment story views
-                await app.increment_story_views(chat_id, 1)
+                # Change status of guests sending messages to disabled
+                await app.toggle_join_to_send()
+
+                # Change status of guests sending messages to enabled
+                await app.toggle_join_to_send(enabled=True)
         """
-        ids = [story_id] if not isinstance(story_id, list) else story_id
-
-        r = await self.invoke(
-            raw.functions.stories.IncrementStoryViews(
-                peer=await self.resolve_peer(chat_id),
-                id=ids
+        try:
+            r = await self.invoke(
+                raw.functions.channels.ToggleJoinToSend(
+                    channel=await self.resolve_peer(chat_id),
+                    enabled=enabled
+                )
             )
-        )
 
-        return r
+            return bool(r)
+        except errors.RPCError:
+            return False
